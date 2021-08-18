@@ -20,14 +20,22 @@ namespace WebMvc.Infrastructure
             public static string GetAllCatalogItems(string baseuri,int page, int take,int? brand,int? type)
             {
                 var filterQs = string.Empty;
-                if(brand.HasValue || type.HasValue)
+                if(brand.HasValue && type.HasValue)
                 {
-                    var brandQs = brand.HasValue ? brand.Value.ToString() : "null";
-                    var typeQs = type.HasValue ? type.Value.ToString() : "null";
+                   // var brandQs = brand.HasValue ? brand.Value.ToString() : "null";
+                   // var typeQs = type.HasValue ? type.Value.ToString() : "null";
 
-                    filterQs = $"/type/{typeQs}/brand/{brandQs}";
+                    return $"{baseuri}items/filtered?catalogTypeId={type}&catalogBrandId={brand}&pageIndex={page}&pageSize={take}";
+                }else if (brand.HasValue)
+                {
+                    return $"{baseuri}items/filtered?catalogBrandId={brand}&pageIndex={page}&pageSize={take}";
                 }
-                return $"{baseuri}items{filterQs}?pageIndex={page}&pageSize={take}";
+                else if (type.HasValue)
+                {
+                    return $"{baseuri}items/filtered?catalogTypeId={type}&pageIndex={page}&pageSize={take}";
+                }
+                return $"{baseuri}items?pageIndex={page}&pageSize={take}";
+
             }
         }
     }

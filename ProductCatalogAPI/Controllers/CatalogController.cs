@@ -40,17 +40,18 @@ namespace ProductCatalogAPI.Controllers
             var model = new PaginatedItemsViewModel
             {
                 PageIndex = pageIndex,
-                PageSize = pageSize,
+                //PageSize = pageSize,
                 Count = itemsCount.Result,
+                PageSize = items.Count,
                 Data = items
             };
             return Ok(model);
         }
 
-        [HttpGet("[action]/type/{catalogTypeId}/brand/{catalogBrandId}")]
+        [HttpGet("[action]/filtered")]
         public async Task<IActionResult> Items(
-            int? catalogTypeId,
-            int? catalogBrandId,
+            [FromQuery] int? catalogTypeId,
+            [FromQuery] int? catalogBrandId,
            [FromQuery] int pageIndex = 0,
            [FromQuery] int pageSize = 6)
         {
@@ -76,8 +77,9 @@ namespace ProductCatalogAPI.Controllers
             var model = new PaginatedItemsViewModel
             {
                 PageIndex = pageIndex,
-                PageSize = pageSize,
+                
                 Count = itemsCount.Result,
+                PageSize = items.Count,
                 Data = items
             };
             return Ok(model);
