@@ -19,6 +19,7 @@ namespace ProductCatalogAPI.Controllers
             _env = env;
         }
         [Route("{id}")]
+        [HttpGet]
         public IActionResult GetImage(int id)
         {
             var webRoot = _env.WebRootPath;
